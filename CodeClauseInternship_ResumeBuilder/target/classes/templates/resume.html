@@ -1,0 +1,214 @@
+Q<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>ResumeBuilder-Resume</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-dark">
+    <section class="justify-content-center container mt-5 mb-5 bg-light" id="cv-form">
+        <h1 class="text-center pt-4">Resume Builder</h1>
+        <div class="row" style="border: 2px solid white;">
+            <div class="col-md-6  text-center p-5">
+                <h3>Personal Information</h3>
+
+                <div class="row mb-3 mt-5">
+                    <div class="col">
+                        <input th:field="*{resume.name}" required id="nameField" type="text" class="form-control" placeholder="First name">
+                    </div>
+                    <div class="col">
+                        <input th:field="*{resume.lastName}" id="lastnameField" type="text" class="form-control" placeholder="Last name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input th:field="*{resume.email}" required id="emailField" type="email" class="form-control"  placeholder="Email"
+                        aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                    <input required id="contactField" type="number" name="pass" class="form-control" placeholder="Contact">
+                    
+                </div>
+                <div class="form-group">
+                    <input required  id="addressField" type="text" name="pass" class="form-control" placeholder="Address">
+                </div>
+                <div class="form-group">
+                    <input type="file" id="imgField" name="image" class="form-control" placeholder="Address">
+                </div>
+                <div class="form-group text-left" id="skill-label">
+                    <div class="input-group mb-3" id="skills-input">
+                        <input type="text" id="skillsField"  class="form-control" list="tech-skills" name="skills"
+                            placeholder="Skills">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><button onclick="addSkills()"
+                                    type="button">Add</button></span>
+                        </div>
+                    </div>
+                    <datalist id="tech-skills">
+                        <option value="Spring Boot"></option>
+                        <option value="Spring Framework"></option>
+                        <option value="Spring Security"></option>
+                        <option value="Spring Data"></option>
+                        <option value="Spring Cloud"></option>
+                        <option value="Spring MVC"></option>
+                        <option value="Spring Batch"></option>
+                        <option value="Spring Integration"></option>
+                        <option value="JavaScript"></option>
+                        <option value="Python"></option>
+                        <option value="Java"></option>
+                        <option value="C++"></option>
+                        <option value="HTML"></option>
+                        <option value="CSS"></option>
+                        <option value="SQL"></option>
+                        <option value="React"></option>
+                        <option value="Node.js"></option>
+                        <option value="Ruby"></option>
+                        <option value="PHP"></option>
+                        <option value="Swift"></option>
+                        <option value="Go"></option>
+                        <option value="TypeScript"></option>
+                        <option value="Rust"></option>
+                        <option value="Vue.js"></option>
+                        <option value="Angular"></option>
+                        <option value="Django"></option>
+                        <option value="Spring Boot"></option>
+                        <option value="Kotlin"></option>
+                        <option value="Perl"></option>
+                        <option value="Scala"></option>
+                        <option value="TensorFlow"></option>
+                        <option value="Docker"></option>
+                        <option value="AWS"></option>
+                        <option value="Azure"></option>
+                        <option value="Google Cloud"></option>
+                        <option value="Machine Learning"></option>
+                        <option value="Data Science"></option>
+                        <option value="DevOps"></option>
+                        <!-- Add more skills here -->
+
+                        <!-- Add more skills here -->
+                    </datalist>
+                </div>
+                <div class="form-group">
+                    <input id="linkField" type="url" name="pass" class="form-control" placeholder="LinkedIn link">
+                </div>
+                <div class="form-group">
+                    <input id="gitlinkField" type="url" name="pass" class="form-control" placeholder="Github link">
+                </div>
+
+            </div>
+            <div class="col-md-6 bg-light p-5">
+                <h3 class="text-center mb-5">Professional Information</h3>
+                <div class="form-group">
+                    <textarea id="aboutField" placeholder="objectives/ about" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group text-center" id="we">
+                    <textarea placeholder="Work experiences" class="form-control workField" rows="3"></textarea>
+                    <button onclick="addNewWEfield()" type="button" id="weBtn"
+                        class="btn btn-outline-info btn-sm mt-2">Add</button>
+                </div>
+                <div class="form-group text-center" id="ae">
+                    <textarea placeholder="Academic qualification" class="form-control eduField" rows="3"></textarea>
+                    <button onclick="addNewEfield()" type="button" id="aeBtn"
+                        class="btn btn-outline-info btn-sm mt-2">Add</button>
+                </div>
+                <div class="form-group text-center" id="ae">
+                    <textarea id="addiField" placeholder="Additional information" class="form-control"
+                        rows="3"></textarea>
+
+                </div>
+
+            </div>
+            <div id="printBtn" class="text-center mt-3 mb-5" style="margin-left: 43%;">
+                <button onclick="generateCV()" type="submit" class="btn btn-outline-dark">Generate Resume</button>
+            </div>
+
+        </div>
+
+        <!-- Additional Information -->
+
+
+    </section>
+
+    <!-- template -->
+    <section class="container bg-light mt-5 mb-5" id="template" style="display: none;">
+        <h1 class="text-center mt-5 mb-4" style="border-bottom: 2px solid black;">YOUR RESUME </h1>
+        <div class="row ml-0 mr-0 mt-4 pb-4">
+
+            <div class="col-md-4 bg-secondary  pl-3 pt-4 pb-4">
+                <div class="profile-img text-center mb-5">
+                    <img name="img" src="/img/default.jpg" id="img" alt="" srcset=""
+                        style="border-radius: 50%;width:50% ;height:50% ">
+                </div>
+                <span style="font-size: 2rem;font-weight: 700;" id="name">Gupta </span>
+                <h3 id="lastname">Alexander </h3>
+                <div class="contact mt-3">
+                    <h5 for="email" id="email">email</h5>
+                    <h5 for="contact" id="contact" >contact</h5>
+                    <h5 id="address" for="email" >address</h5>
+                </div>
+                <h4 class="mt-4">Skills</h4>
+                <ul id="skills">
+                    <li>Java </li>
+                </ul>
+                <p id="git" for="email">github</p>
+                <p id="link" for="contact" style="margin-top: -5%;">linkedin</p>
+            </div>
+            <div class="col-md-8 p-4">
+                <div class="about">
+                    <h3>About</h3>
+                    <p id="about"></p>
+                </div>
+                <div class="work mt-4">
+                    <h3>Work Experience</h3>
+                    <ul id="work">
+                        <li></li>
+                    </ul>
+                </div>
+                <div class="work mt-4">
+                    <h3>Academics Qualifications</h3>
+                    <ul id="edu">
+                       <li></li>
+                    </ul>
+                </div>
+                <div class="about">
+                    <h3>Additional Information</h3>
+                    <p id="addi"></p>
+                </div>
+            </div>
+            
+
+        </div>
+        
+    </section>
+    <div id="print-btn" class="text-center mt-3 mb-5" style="margin-left: 0%;display: none;">
+                <button onclick="printCV()" type="submit" class="btn btn-outline-light">Print Resume</button>
+            </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
